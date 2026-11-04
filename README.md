@@ -1,107 +1,247 @@
-# Algorithmic Trading Backtester
+# Quant Strategy Lab
 
-Python backtesting project for multi-asset strategies that emit target portfolio weights. It loads adjusted-close data from Yahoo Finance or CSV, simulates rebalancing with commissions and slippage, compares the result with a benchmark, and reports performance, risk, and trade statistics. The Streamlit app also provides parameter search and walk-forward validation.
+A Python-based algorithmic trading research and backtesting platform built with Streamlit. Explore six trading strategies, simulate portfolio performance, evaluate risk, and compare strategies using historical market data.
 
-## Core strategies
+Quant Strategy Lab combines strategy development, portfolio simulation, performance analytics, parameter optimization, and walk-forward validation in one interactive dashboard.
 
-- Moving Average Crossover
-- RSI Mean Reversion
-- MACD Trend Following
-- Bollinger Mean Reversion
-- Donchian Channel Breakout
-- Buy and Hold
+---
 
-## Features
+## Dashboard Preview
 
-- Load adjusted-close prices from Yahoo Finance or wide/long CSV files.
-- Run built-in trend, mean-reversion, momentum, allocation, pairs, ensemble, and custom-rule strategies.
-- Simulate long-only or long/short target weights with daily, weekly, or monthly rebalancing.
-- Apply per-asset weight limits, gross-exposure limits, and optional volatility targeting.
-- Record share changes, execution prices, notionals, turnover, commissions, and slippage.
-- Calculate returns, CAGR, volatility, Sharpe and Sortino ratios, drawdown, VaR/CVaR, and benchmark comparison metrics.
-- Run grid searches and rolling or expanding walk-forward validation. Parameters are selected on training windows and then held fixed for the following test windows.
-- Define custom rules with presets, a visual condition builder, or validated pandas expressions.
+### 1. Main Backtesting Dashboard
 
-## Strategies
+View portfolio performance, benchmark comparison, key performance indicators, and equity/drawdown charts.
 
-The built-in strategies include:
+![Main Backtesting Dashboard](docs/01-backtest-dashboard.png)
 
-- Moving Average Crossover, MACD Trend Following, and Donchian Channel Breakout
+### 2. Strategy Comparison
 
-See [STRATEGY_GUIDE.md](STRATEGY_GUIDE.md) for the strategy list and extension example. See [CUSTOM_RULE_BUILDER.md](CUSTOM_RULE_BUILDER.md) for the expression syntax and supported indicators.
+Compare all six strategies using common market data and performance metrics, including total return, annual return, volatility, Sharpe ratio, Sortino ratio, and maximum drawdown.
 
-## Screenshots
+![Strategy Comparison](docs/02-strategy-comparison.png)
 
-### Backtest
-![Backtest](docs/charts.png)
+### 3. Walk-Forward Validation
 
-### Walk-forward validation
-![Walk-forward validation](docs/validation.png)
+Evaluate strategy performance using rolling training and out-of-sample testing windows, with parameters selected on training data and evaluated on subsequent unseen periods.
 
-### Risk
-![Risk](docs/charts-more.png)
+![Walk-Forward Validation](docs/03-walk-forward-validation.png)
 
-### Signals
-![Signals](docs/signal.png)
+### 4. Trade Analysis
 
-### Allocations
-![Allocations](docs/weights.png)
+Inspect executed transactions, including execution dates, assets, quantities, prices, transaction costs, and trade values.
 
-### Custom strategy
-![Custom strategy](docs/custom.png)
+![Trade Analysis](docs/04-trade-analysis.png)
 
-## How it works
+### 5. Risk Analytics
 
-1. The data loader normalizes dates and symbols, filters the requested period, and returns a common price frame.
-2. A strategy generates target weights for each available date.
-3. The portfolio simulator applies exposure controls and the rebalance schedule, converts target values to shares, and deducts trading costs.
-4. The engine builds the equity and benchmark curves and calculates metrics from the resulting history.
-5. Walk-forward validation selects parameters on each training window, uses earlier rows only for indicator warm-up, applies the frozen parameters to the next test window, and stitches the test windows with continuous capital.
+Analyse portfolio returns, volatility, drawdowns, Sharpe and Sortino ratios, Value at Risk (VaR), Conditional Value at Risk (CVaR), and monthly returns.
 
-## Running locally
+![Risk Analytics](docs/05-risk-analytics.png)
 
-```bash
-python -m venv .venv
+### 6. Portfolio Allocations
 
-# Windows PowerShell
-.venv\Scripts\Activate.ps1
+Visualise historical portfolio weights and understand how capital is allocated across different assets over time.
 
-# macOS/Linux
-# source .venv/bin/activate
+![Portfolio Allocations](docs/06-portfolio-allocations.png)
 
-python -m pip install -r requirements.txt
-streamlit run app.py
+### 7. Trading Signals
+
+Explore generated portfolio signals, asset weights, active trading days, turnover, and estimated transaction cost impact.
+
+![Trading Signals](docs/07-trading-signals.png)
+
+### 8. Optimizer Results
+
+Review rolling walk-forward parameter selection, training scores, selected parameter combinations, and out-of-sample performance by fold.
+
+![Optimizer Results](docs/08-optimizer-results.png)
+
+---
+
+## Trading Strategies
+
+The platform implements six trading strategies:
+
+| Strategy | Approach |
+|---|---|
+| Moving Average Crossover | Trend following using short- and long-term moving averages |
+| RSI Mean Reversion | Identifies potential overbought and oversold conditions |
+| MACD Trend Following | Uses MACD signals to identify market trends |
+| Bollinger Mean Reversion | Uses Bollinger Bands to identify potential price reversals |
+| Donchian Channel Breakout | Identifies breakouts above or below recent price channels |
+| Buy and Hold | Invests in selected assets and maintains positions |
+
+See [STRATEGY_GUIDE.md](STRATEGY_GUIDE.md) for further details.
+
+## Key Features
+
+- **Market Data:** Load historical adjusted-close prices from Yahoo Finance or CSV files.
+- **Portfolio Backtesting:** Simulate portfolio performance using strategy-generated target weights.
+- **Execution Costs:** Account for commissions and slippage.
+- **Risk Management:** Configure position limits, gross exposure limits, and portfolio constraints.
+- **Performance Analytics:** Calculate total return, CAGR, volatility, Sharpe ratio, Sortino ratio, and maximum drawdown.
+- **Benchmark Comparison:** Evaluate strategy performance against a selected benchmark.
+- **Walk-Forward Validation:** Evaluate strategies using rolling or expanding training and out-of-sample testing windows.
+- **Parameter Optimization:** Explore strategy parameters and evaluate parameter selection across validation folds.
+- **Trade Analysis:** Inspect executed trades, transaction costs, and portfolio turnover.
+- **Portfolio Analytics:** Visualise asset allocations and generated trading signals.
+- **Strategy Comparison:** Run all six strategies and compare their performance using common metrics.
+- **Reporting:** Generate and inspect backtest performance reports.
+
+## Technology Stack
+
+- Python
+- Streamlit
+- Pandas
+- NumPy
+- Matplotlib
+- Plotly
+- yfinance
+- SciPy
+- pytest
+
+## Project Structure
+
+```text
+quant-strategy-lab/
+│
+├── app.py
+├── run_backtest.py
+├── requirements.txt
+├── README.md
+├── STRATEGY_GUIDE.md
+│
+├── src/
+│   ├── backtester/
+│   │   ├── engine.py
+│   │   ├── portfolio.py
+│   │   ├── metrics.py
+│   │   ├── optimizer.py
+│   │   └── reporting.py
+│   │
+│   ├── data/
+│   │   └── loader.py
+│   │
+│   └── strategies/
+│       ├── base.py
+│       ├── moving_average.py
+│       ├── rsi.py
+│       ├── macd.py
+│       ├── bollinger.py
+│       ├── donchian.py
+│       └── buy_hold.py
+│
+├── tests/
+├── docs/
+│   ├── 01-backtest-dashboard.png
+│   ├── 02-strategy-comparison.png
+│   ├── 03-walk-forward-validation.png
+│   ├── 04-trade-analysis.png
+│   ├── 05-risk-analytics.png
+│   ├── 06-portfolio-allocations.png
+│   ├── 07-trading-signals.png
+│   └── 08-optimizer-results.png
+│
+├── reports/
+└── scripts/
 ```
 
-The app can load Yahoo Finance data or a CSV file. Yahoo Finance access requires a network connection; CSV input is available for repeatable local runs with a fixed dataset.
+## Installation and Setup
 
-The command-line example uses Yahoo Finance data and writes report files to `reports/`:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/ankuchoudhary121/quant-strategy-lab.git
+cd quant-strategy-lab
+```
+
+### 2. Create a virtual environment
+
+```bash
+python3 -m venv .venv
+```
+
+Activate on macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Activate on Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+### 3. Install dependencies
+
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+### 4. Launch the dashboard
+
+```bash
+python -m streamlit run app.py
+```
+
+Open the local address displayed in your terminal, usually:
+
+```text
+http://localhost:8501
+```
+
+The application supports Yahoo Finance data retrieval and CSV uploads. Yahoo Finance access requires an internet connection.
+
+## Running a Backtest from the Command Line
+
+The project also includes a command-line example:
 
 ```bash
 python run_backtest.py
 ```
 
-## Testing
+## Running Tests
+
+Run the automated test suite:
 
 ```bash
-pytest
+pytest -q
 ```
 
-## Project layout
+The tests cover strategy behaviour, portfolio calculations, performance metrics, application functionality, and walk-forward validation.
 
-```text
-app.py                     Streamlit application
-run_backtest.py            Command-line example
-src/data/                  Price loading and normalization
-src/backtester/            Engine, portfolio, metrics, optimization, reports
-src/strategies/            Built-in and custom strategies
-tests/                     Pytest suite
-docs/                      Documentation screenshots
-```
+## Backtesting Methodology
+
+The application follows a modular backtesting workflow:
+
+1. **Data loading:** Historical price data is retrieved from Yahoo Finance or uploaded through CSV.
+2. **Signal generation:** The selected strategy analyses price data and generates target portfolio weights.
+3. **Portfolio simulation:** The backtesting engine applies portfolio constraints, rebalancing rules, and transaction costs.
+4. **Performance evaluation:** Portfolio equity and benchmark performance are calculated.
+5. **Validation:** Walk-forward validation selects parameters on training windows and evaluates them on subsequent out-of-sample periods.
 
 ## Limitations
 
-- Yahoo Finance data availability and the latest date depend on the data provider. The effective period is the range of rows actually loaded and used by the run.
-- The simulator uses daily prices and simple commission/slippage assumptions. It does not model intraday execution, market impact, taxes, borrow availability, or order-book behavior.
-- A selected ticker universe is not a survivorship-bias-free index study; delisted assets are not added automatically.
-- Walk-forward validation separates parameter selection from later test windows, but it cannot establish future profitability.
+This project is intended for educational and quantitative research purposes. Historical backtesting results do not guarantee future performance.
+
+- The simulator uses historical daily prices and simplified execution-cost assumptions.
+- It does not fully model intraday execution, market impact, taxes, borrow availability, or order-book behaviour.
+- Historical results depend on the selected assets, date range, strategy parameters, and market conditions.
+- Walk-forward validation helps evaluate out-of-sample performance but cannot eliminate all forms of overfitting.
+- The selected ticker universe is not automatically survivorship-bias-free.
+
+## Author
+
+**Ankita Choudhary**
+
+Data Science and Business Analytics
+
+GitHub: [@ankuchoudhary121](https://github.com/ankuchoudhary121)
+
+**Project Repository:** [Quant Strategy Lab](https://github.com/ankuchoudhary121/quant-strategy-lab)
+
+---
+
+*Built as a Data Science and quantitative finance portfolio project.*
