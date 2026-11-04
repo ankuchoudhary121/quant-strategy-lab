@@ -1,0 +1,27 @@
+{
+  "requested_period": {
+    "start": "2019-01-01",
+    "end": "2026-09-18"
+  },
+  "cached_dataset": {
+    "source": "Yahoo Finance via yfinance",
+    "local_path": "reports/market_data_2019_2026.csv",
+    "columns": [
+      "AAPL",
+      "MSFT",
+      "NVDA",
+      "SPY"
+    ],
+    "rows": 1939,
+    "effective_start": "2019-01-02",
+    "effective_end": "2026-09-18"
+  },
+  "portfolio_screenshots": {
+    "charts": "Moving Average Crossover",
+    "validation": "Moving Average Crossover",
+    "charts-more": "Moving Average Crossover",
+    "signal": "Moving Average Crossover",
+    "weights": "Moving Average Crossover"
+  },
+  "strategy": "Moving Average Crossover"
+}

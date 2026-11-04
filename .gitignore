@@ -1,0 +1,38 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.env
+reports/*.csv
+reports/*.html
+reports/*.json
+reports/yf_cache/
+!reports/market_data_2019_2026.csv
+!reports/screenshot_data_manifest.json
+!reports/.gitkeep
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# macOS and editor files
+.DS_Store
+.vscode/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Jupyter temporary files
+.ipynb_checkpoints/
+# Generated validation files
+reports/*.pkl
